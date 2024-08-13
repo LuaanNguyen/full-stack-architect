@@ -6,12 +6,16 @@ app = Flask(__name__)
 
 CORS(app)
 
-app.config["SQLALCHEMY_DATABASE_URI"] = ["sqlite:///mydatabase.db"] #specifying the address of the database
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///mydatabase.db" #specifying the address of the database
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False #disable track modifications
 
 
 db = SQLAlchemy(app)
 
-
 #CRUD app 
+
+#create
+# first name
+# last name
+# email
 
