@@ -13,4 +13,5 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False #disable track modification
 db = SQLAlchemy(app)
 
 
+#CRUD app 
 
