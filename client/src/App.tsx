@@ -3,10 +3,26 @@ import ContactList from "./ContactList";
 import "./App.css";
 import ContactForm from "./ContactForm";
 
+export type ContactTypes = {
+  email: string;
+  firstName: string;
+  lastName: string;
+  id: number;
+};
+
+const defaultContact: ContactTypes = {
+  email: "",
+  firstName: "",
+  lastName: "",
+  id: 0,
+};
+
 function App() {
-  const [contacts, setContacts] = useState([]);
+  const [contacts, setContacts] = useState<ContactTypes[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentContact, setCurrentContact] = useState({});
+  const [currentContact, setCurrentContact] = useState<
+    ContactTypes | undefined
+  >(undefined);
 
   useEffect(() => {
     fetchContacts();
@@ -20,14 +36,14 @@ function App() {
 
   const closeModal = () => {
     setIsModalOpen(false);
-    setCurrentContact({});
+    setCurrentContact(undefined); // or set to `defaultContact` if needed
   };
 
   const openCreateModal = () => {
     if (!isModalOpen) setIsModalOpen(true);
   };
 
-  const openEditModal = (contact) => {
+  const openEditModal = (contact: ContactTypes) => {
     if (isModalOpen) return;
     setCurrentContact(contact);
     setIsModalOpen(true);
@@ -53,7 +69,7 @@ function App() {
               &times;
             </span>
             <ContactForm
-              existingContact={currentContact}
+              existingContact={currentContact || defaultContact}
               updateCallback={onUpdate}
             />
           </div>

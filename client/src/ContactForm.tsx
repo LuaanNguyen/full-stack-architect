@@ -1,13 +1,19 @@
 import { useState } from "react";
+import { ContactTypes } from "./App";
 
-const ContactForm = ({ existingContact = {}, updateCallback }) => {
-  const [firstName, setFirstName] = useState(existingContact.firstName || "");
-  const [lastName, setLastName] = useState(existingContact.lastName || "");
-  const [email, setEmail] = useState(existingContact.email || "");
+interface ContactFormProps {
+  existingContact: ContactTypes;
+  updateCallback: () => void;
+}
 
-  const updating = Object.entries(existingContact).length !== 0;
+const ContactForm = ({ existingContact, updateCallback }: ContactFormProps) => {
+  const [firstName, setFirstName] = useState(existingContact.firstName);
+  const [lastName, setLastName] = useState(existingContact.lastName);
+  const [email, setEmail] = useState(existingContact.email);
 
-  const onSubmit = async (e) => {
+  const updating = existingContact.id !== 0;
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const data = {
@@ -27,8 +33,8 @@ const ContactForm = ({ existingContact = {}, updateCallback }) => {
     };
     const response = await fetch(url, options);
     if (response.status !== 201 && response.status !== 200) {
-      const data = await response.json();
-      alert(data.message);
+      const responseData = await response.json();
+      alert(responseData.message);
     } else {
       updateCallback();
     }

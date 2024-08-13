@@ -1,7 +1,18 @@
 import React from "react";
+import { ContactTypes } from "./App";
 
-const ContactList = ({ contacts, updateContact, updateCallback }) => {
-  const onDelete = async (id) => {
+interface ContactListProps {
+  contacts: ContactTypes[];
+  updateContact: (contact: ContactTypes) => void;
+  updateCallback: () => void;
+}
+
+const ContactList = ({
+  contacts,
+  updateContact,
+  updateCallback,
+}: ContactListProps) => {
+  const onDelete = async (id: number) => {
     try {
       const options = {
         method: "DELETE",
